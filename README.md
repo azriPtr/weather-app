@@ -12,6 +12,12 @@ Built with Next.js 16, React 19, TypeScript and Tailwind CSS 4. Weather data com
 | --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | ![Chicago on a cloudy morning with rain expected](docs/screenshots/desktop-chicago.jpg) | ![Jakarta on a clear night with stars](docs/screenshots/desktop-jakarta.jpg) |
 
+<p>
+  <img src="docs/screenshots/mobile-dubai.jpg" width="32%" alt="Dubai at dusk on a phone">
+  <img src="docs/screenshots/mobile-chicago.jpg" width="32%" alt="Chicago before rain on a phone">
+  <img src="docs/screenshots/mobile-details.jpg" width="32%" alt="Detail cards on a phone: UV, air quality, wind, sunset, feels like, humidity, precipitation, visibility">
+</p>
+
 ## What it does
 
 - **Search any city.** Suggestions appear as you type and are ranked by population, so "jakar" lists Jakarta before the town of Jakar in Bhutan. It works from the keyboard: `/` or `⌘K` focuses the field, arrows move, Enter picks, Esc closes. Recent places show when the field is empty.
@@ -23,6 +29,7 @@ Built with Next.js 16, React 19, TypeScript and Tailwind CSS 4. Weather data com
 - **Details that come with advice.** UV index and until when to use sun protection, US AQI and what the level means, wind with direction and gusts, feels-like with the reason, humidity with dew point, rain expected in the next 24 hours and the next wet day, visibility, and sunrise or sunset with the sun's position.
 - **°C and °F.** Switching is instant and does not refetch anything. The choice is remembered, and first-time visitors from the US get °F.
 - **Local time.** Every time on screen is in the searched city's time zone. Checking Tokyo from Jakarta shows Tokyo's 3 PM.
+- **Link previews.** A shared link unfurls into an image of the place, its temperature and its current sky ([example](docs/screenshots/og-dubai.png)), rendered on request and cached for 10 minutes.
 - **Shareable links.** The place lives in the URL (`/?lat=35.69&lon=139.69&name=Tokyo`), so a forecast can be bookmarked, refreshed or sent to someone.
 
 ## The sky
