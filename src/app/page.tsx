@@ -6,7 +6,7 @@ import { ForecastSkeleton } from "@/components/forecast/forecast-skeleton";
 import { ForecastView } from "@/components/forecast/forecast-view";
 import { Landing } from "@/components/landing";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
-import { placeKey } from "@/lib/place";
+import { placeKey, placeToSearchParams } from "@/lib/place";
 import { placeFromSearchParams } from "@/lib/place-params";
 import { getDefaultPlace, getPreferences } from "@/lib/preferences";
 import { describeCondition } from "@/lib/weather/conditions";
@@ -21,14 +21,17 @@ export async function generateMetadata({ searchParams }: PageProps<"/">): Promis
   const place = await resolvePlace(searchParams);
   if (!place) return {};
 
+  const { units } = await getPreferences();
+  const image = `/og?${placeToSearchParams(place)}${units === "imperial" ? "&units=imperial" : ""}`;
+  const openGraph = { images: [{ url: image, width: 1200, height: 630 }] };
+
   try {
-    const [{ current }, { units }] = await Promise.all([getForecast(place), getPreferences()]);
+    const { current } = await getForecast(place);
     const condition = describeCondition(current.weatherCode, current.isDay);
-    return {
-      title: `${place.name} ${formatTemperature(current.temperature, units)} ${condition.label}`,
-    };
+    const title = `${place.name} ${formatTemperature(current.temperature, units)} ${condition.label}`;
+    return { title, openGraph: { ...openGraph, title }, twitter: { card: "summary_large_image" } };
   } catch {
-    return { title: place.name };
+    return { title: place.name, openGraph };
   }
 }
 
