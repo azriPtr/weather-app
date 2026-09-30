@@ -1,20 +1,20 @@
 # Stratus
 
-A weather app for any city: current conditions, the next 24 hours, the next 10 days, UV and air quality. The background is drawn from the forecast itself, so a clear evening in Dubai and a wet morning in Chicago look like what they are.
+A weather app for any city: current conditions, the next 24 hours, the next 10 days, UV and air quality. The background is drawn from the forecast itself, so dusk in Helsinki and a wet morning in Chicago look like what they are.
 
 Built with Next.js 16, React 19, TypeScript and Tailwind CSS 4. Weather data comes from [Open-Meteo](https://open-meteo.com), which needs no API key, so the project runs after `npm install` with nothing to configure.
 
 **Live: [stratus-weather.vercel.app](https://stratus-weather.vercel.app)**
 
-![Stratus showing Dubai at dusk: 32°, clear, with the hourly and 10-day forecast](docs/screenshots/desktop-dubai.jpg)
+![Stratus showing Helsinki at dusk: 14°, sunny, with the hourly and 10-day forecast](docs/screenshots/desktop-dusk.jpg)
 
-| Rain, daytime                                                                           | Clear, night                                                                 |
-| --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| ![Chicago on a cloudy morning with rain expected](docs/screenshots/desktop-chicago.jpg) | ![Jakarta on a clear night with stars](docs/screenshots/desktop-jakarta.jpg) |
+| Rain, daytime                                                                 | Clear, night                                                               |
+| ----------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| ![Chicago in light rain on a grey morning](docs/screenshots/desktop-rain.jpg) | ![Jakarta on a clear night with stars](docs/screenshots/desktop-night.jpg) |
 
 <p>
-  <img src="docs/screenshots/mobile-dubai.jpg" width="32%" alt="Dubai at dusk on a phone">
-  <img src="docs/screenshots/mobile-chicago.jpg" width="32%" alt="Chicago before rain on a phone">
+  <img src="docs/screenshots/mobile-dusk.jpg" width="32%" alt="Helsinki at dusk on a phone">
+  <img src="docs/screenshots/mobile-rain.jpg" width="32%" alt="Chicago in light rain on a phone">
   <img src="docs/screenshots/mobile-details.jpg" width="32%" alt="Detail cards on a phone: UV, air quality, wind, sunset, feels like, humidity, precipitation, visibility">
 </p>
 
@@ -29,7 +29,7 @@ Built with Next.js 16, React 19, TypeScript and Tailwind CSS 4. Weather data com
 - **Details that come with advice.** UV index and until when to use sun protection, US AQI and what the level means, wind with direction and gusts, feels-like with the reason, humidity with dew point, rain expected in the next 24 hours and the next wet day, visibility, and sunrise or sunset with the sun's position.
 - **°C and °F.** Switching is instant and does not refetch anything. The choice is remembered, and first-time visitors from the US get °F.
 - **Local time.** Every time on screen is in the searched city's time zone. Checking Tokyo from Jakarta shows Tokyo's 3 PM.
-- **Link previews.** A shared link unfurls into an image of the place, its temperature and its current sky ([example](docs/screenshots/og-dubai.png)), rendered on request and cached for 10 minutes.
+- **Link previews.** A shared link unfurls into an image of the place, its temperature and its current sky ([example](docs/screenshots/og-preview.png)), rendered on request and cached for 10 minutes.
 - **Shareable links.** The place lives in the URL (`/?lat=35.69&lon=139.69&name=Tokyo`), so a forecast can be bookmarked, refreshed or sent to someone.
 
 ## The sky
@@ -38,7 +38,7 @@ It is the one expressive part of an otherwise quiet interface. For every forecas
 
 The scene is a set of CSS custom properties registered with `@property`, so choosing another city animates the sky from one state to the next. It is rendered on the server, so the first paint already has the right sky. The canvas pauses when the tab is hidden and never starts when the system asks for reduced motion. There are no lightning flashes, for people who are sensitive to flashing light.
 
-The panels are clear glass: a light tint and a strong blur, so the sky's colour comes through, with a rim of light along the edge. By day the tint is a faint smoke; at night it turns to frost, the way the cards in Apple's Weather app gain body after dark.
+The panels are clear glass: a light tint and a strong blur, so the sky's color comes through, with a rim of light along the edge. By day the tint is a faint smoke; at night it turns to frost, the way the cards in Apple's Weather app gain body after dark.
 
 Clear glass makes contrast a real risk, so readability has a test. It checks 32 combinations of weather and time of day, with the brightest part of a cloud, haze or the sun's glow behind the text, and fails the build if secondary text drops below WCAG AA (4.5:1) on the sky or on a panel. The lowest value it measures today is 4.65:1.
 

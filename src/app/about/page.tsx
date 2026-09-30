@@ -4,14 +4,14 @@ import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-import desktopChicago from "../../../docs/screenshots/desktop-chicago.jpg";
-import desktopDubai from "../../../docs/screenshots/desktop-dubai.jpg";
-import desktopJakarta from "../../../docs/screenshots/desktop-jakarta.jpg";
+import desktopDusk from "../../../docs/screenshots/desktop-dusk.jpg";
 import desktopLanding from "../../../docs/screenshots/desktop-landing.jpg";
+import desktopNight from "../../../docs/screenshots/desktop-night.jpg";
+import desktopRain from "../../../docs/screenshots/desktop-rain.jpg";
 import desktopSearch from "../../../docs/screenshots/desktop-search.jpg";
-import mobileChicago from "../../../docs/screenshots/mobile-chicago.jpg";
 import mobileDetails from "../../../docs/screenshots/mobile-details.jpg";
-import mobileDubai from "../../../docs/screenshots/mobile-dubai.jpg";
+import mobileDusk from "../../../docs/screenshots/mobile-dusk.jpg";
+import mobileRain from "../../../docs/screenshots/mobile-rain.jpg";
 import { WalkthroughVideo } from "@/components/about/walkthrough-video";
 import { Atmosphere } from "@/components/atmosphere/atmosphere";
 import { Logo, SiteFooter } from "@/components/site-chrome";
@@ -79,11 +79,11 @@ const DECISIONS: ReadonlyArray<{ title: string; body: string }> = [
 
 const DESKTOP_SHOTS: ReadonlyArray<{ image: StaticImageData; alt: string; caption: string }> = [
   {
-    image: desktopChicago,
-    alt: "Chicago on a cloudy morning with rain expected",
+    image: desktopRain,
+    alt: "Chicago in light rain on a grey morning",
     caption: "Rain on the way",
   },
-  { image: desktopJakarta, alt: "Jakarta on a clear night with stars", caption: "Clear night" },
+  { image: desktopNight, alt: "Jakarta on a clear night with stars", caption: "Clear night" },
   { image: desktopSearch, alt: "City search with suggestions for “san”", caption: "Search" },
   {
     image: desktopLanding,
@@ -93,8 +93,8 @@ const DESKTOP_SHOTS: ReadonlyArray<{ image: StaticImageData; alt: string; captio
 ];
 
 const MOBILE_SHOTS: ReadonlyArray<{ image: StaticImageData; alt: string }> = [
-  { image: mobileDubai, alt: "Dubai at dusk on a phone" },
-  { image: mobileChicago, alt: "Chicago before rain on a phone" },
+  { image: mobileDusk, alt: "Helsinki at dusk on a phone" },
+  { image: mobileRain, alt: "Chicago in light rain on a phone" },
   { image: mobileDetails, alt: "Detail cards on a phone" },
 ];
 
@@ -220,8 +220,8 @@ export default function AboutPage() {
 
         <Section title="Screenshots">
           <Shot
-            image={desktopDubai}
-            alt="Dubai at dusk: 32°, clear, with the next 24 hours and the 10-day forecast"
+            image={desktopDusk}
+            alt="Helsinki at dusk: 14°, sunny, with the next 24 hours and the 10-day forecast"
             sizes="(min-width: 1024px) 64rem, 100vw"
           />
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
