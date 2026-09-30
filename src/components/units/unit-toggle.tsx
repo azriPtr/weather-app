@@ -14,7 +14,7 @@ export function UnitToggle() {
   const { system, setSystem } = useUnits();
 
   return (
-    <fieldset className="relative grid h-11 shrink-0 grid-cols-2 panel rounded-full p-1">
+    <fieldset className="panel relative grid h-11 shrink-0 grid-cols-2 rounded-full p-1">
       <legend className="sr-only">Units</legend>
       <span
         aria-hidden

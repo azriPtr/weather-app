@@ -38,7 +38,7 @@ function Card({
   note?: ReactNode;
 }) {
   return (
-    <section className="relative flex min-h-44 flex-col panel p-4 sm:p-5">
+    <section className="panel relative flex min-h-44 flex-col p-4 sm:p-5">
       <h3 className="flex items-center gap-1.5 label">
         <Icon aria-hidden className="size-3.5" strokeWidth={2} />
         {title}

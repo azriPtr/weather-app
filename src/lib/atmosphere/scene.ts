@@ -17,6 +17,8 @@ export type Scene = {
   cloudOpacity: number;
   starOpacity: number;
   hazeOpacity: number;
+  /** Tint of the glass panels: dark enough by day for contrast, light at night for body. */
+  glass: string;
   precipitation: PrecipitationType;
   /** 0 to 1. */
   intensity: number;
@@ -50,19 +52,20 @@ export function getPhase({
 
 type Gradient = { top: Oklch; bottom: Oklch };
 
-// Every sky stays dark enough behind the text for white type to hold 4.5:1.
+// Tuned with src/lib/atmosphere/contrast.test.ts: white text must hold 4.5:1
+// on every sky, including under clouds, haze and sun glow.
 const CLEAR: Record<Phase, Gradient> = {
   night: { top: [0.19, 0.045, 268], bottom: [0.29, 0.06, 276] },
-  dawn: { top: [0.34, 0.08, 285], bottom: [0.58, 0.11, 42] },
-  day: { top: [0.48, 0.12, 252], bottom: [0.59, 0.1, 232] },
-  dusk: { top: [0.28, 0.09, 290], bottom: [0.54, 0.13, 34] },
+  dawn: { top: [0.34, 0.08, 285], bottom: [0.52, 0.11, 42] },
+  day: { top: [0.45, 0.125, 254], bottom: [0.52, 0.11, 238] },
+  dusk: { top: [0.28, 0.09, 290], bottom: [0.49, 0.13, 34] },
 };
 
 const OVERCAST: Record<Phase, Gradient> = {
   night: { top: [0.21, 0.015, 260], bottom: [0.28, 0.02, 262] },
-  dawn: { top: [0.35, 0.03, 290], bottom: [0.5, 0.05, 45] },
-  day: { top: [0.47, 0.025, 245], bottom: [0.55, 0.02, 240] },
-  dusk: { top: [0.29, 0.035, 295], bottom: [0.45, 0.06, 35] },
+  dawn: { top: [0.35, 0.03, 290], bottom: [0.45, 0.05, 45] },
+  day: { top: [0.41, 0.025, 245], bottom: [0.47, 0.02, 240] },
+  dusk: { top: [0.29, 0.035, 295], bottom: [0.41, 0.06, 35] },
 };
 
 const STORM: Record<Phase, Gradient> = {
@@ -76,19 +79,29 @@ type Glow = { color: Oklch; alpha: number; x: number; y: number };
 
 const GLOW: Record<Phase, Glow> = {
   night: { color: [0.92, 0.02, 250], alpha: 0.14, x: 80, y: 6 },
-  dawn: { color: [0.86, 0.11, 60], alpha: 0.5, x: 18, y: 108 },
-  day: { color: [0.98, 0.06, 95], alpha: 0.42, x: 84, y: -8 },
-  dusk: { color: [0.78, 0.14, 45], alpha: 0.5, x: 82, y: 108 },
+  dawn: { color: [0.8, 0.12, 55], alpha: 0.4, x: 18, y: 108 },
+  day: { color: [0.94, 0.07, 90], alpha: 0.3, x: 84, y: -8 },
+  dusk: { color: [0.74, 0.14, 45], alpha: 0.42, x: 82, y: 108 },
 };
 
 const CLOUD: Record<Phase, Oklch> = {
   night: [0.42, 0.02, 265],
-  dawn: [0.84, 0.04, 40],
-  day: [0.97, 0.005, 250],
-  dusk: [0.72, 0.05, 30],
+  dawn: [0.64, 0.04, 40],
+  day: [0.65, 0.015, 245],
+  dusk: [0.56, 0.05, 30],
 };
 
 const STORM_CLOUD: Oklch = [0.3, 0.02, 260];
+
+const SMOKE: Oklch = [0.2, 0.02, 260];
+const FROST: Oklch = [1, 0, 0];
+
+const GLASS: Record<Phase, { color: Oklch; alpha: number }> = {
+  night: { color: FROST, alpha: 0.07 },
+  dawn: { color: SMOKE, alpha: 0.2 },
+  day: { color: SMOKE, alpha: 0.24 },
+  dusk: { color: SMOKE, alpha: 0.2 },
+};
 
 type Profile = {
   overcast: number;
@@ -102,7 +115,7 @@ const PROFILES: Record<ConditionKind, Profile> = {
   clear: { overcast: 0, clouds: 0.1, haze: 0 },
   "partly-cloudy": { overcast: 0.3, clouds: 0.5, haze: 0 },
   cloudy: { overcast: 0.8, clouds: 0.75, haze: 0.05 },
-  fog: { overcast: 0.9, clouds: 0.3, haze: 0.6 },
+  fog: { overcast: 0.9, clouds: 0.3, haze: 0.5 },
   drizzle: { overcast: 0.8, clouds: 0.65, haze: 0.15, precipitation: "rain" },
   rain: { overcast: 0.9, clouds: 0.75, haze: 0.15, precipitation: "rain" },
   "freezing-rain": { overcast: 0.9, clouds: 0.75, haze: 0.2, precipitation: "rain" },
@@ -151,6 +164,7 @@ export function deriveScene(input: SceneInput): Scene {
     cloudOpacity: profile.clouds,
     starOpacity: stars,
     hazeOpacity: profile.haze,
+    glass: css(GLASS[phase].color, GLASS[phase].alpha),
     precipitation: profile.precipitation ?? "none",
     intensity,
     lean: Number(lean.toFixed(3)),
@@ -169,6 +183,7 @@ export const DEFAULT_SCENE: Scene = {
   cloudOpacity: 0.25,
   starOpacity: 0.8,
   hazeOpacity: 0,
+  glass: css(GLASS.night.color, GLASS.night.alpha),
   precipitation: "none",
   intensity: 0,
   lean: 0,

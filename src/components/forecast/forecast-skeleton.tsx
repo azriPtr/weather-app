@@ -17,11 +17,11 @@ export function ForecastSkeleton() {
         <Block className="mt-6 h-5 w-52" />
         <Block className="mt-5 h-5 w-72" />
       </div>
-      <div className="h-44 panel lg:col-start-1 lg:row-start-2" />
-      <div className="h-[34rem] panel lg:col-start-2 lg:row-span-2 lg:row-start-1" />
+      <div className="panel h-44 lg:col-start-1 lg:row-start-2" />
+      <div className="panel h-[34rem] lg:col-start-2 lg:row-span-2 lg:row-start-1" />
       <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:col-span-2 lg:grid-cols-4">
         {Array.from({ length: 8 }, (_, index) => (
-          <div key={index} className="h-44 panel" />
+          <div key={index} className="panel h-44" />
         ))}
       </div>
     </div>

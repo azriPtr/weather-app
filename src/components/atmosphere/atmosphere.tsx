@@ -32,6 +32,8 @@ export function Atmosphere({ scene }: { scene: Scene }) {
 
   return (
     <div aria-hidden className="atmosphere" style={style} data-phase={scene.phase}>
+      {/* Panels are not inside this element, so the glass tint goes on :root. */}
+      <style dangerouslySetInnerHTML={{ __html: `:root{--glass:${scene.glass}}` }} />
       <div className="atmosphere-glow" />
       <Stars />
       {CLOUDS.map((cloud) => (

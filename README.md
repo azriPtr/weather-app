@@ -38,7 +38,9 @@ It is the one expressive part of an otherwise quiet interface. For every forecas
 
 The scene is a set of CSS custom properties registered with `@property`, so choosing another city animates the sky from one state to the next. It is rendered on the server, so the first paint already has the right sky. The canvas pauses when the tab is hidden and never starts when the system asks for reduced motion. There are no lightning flashes, for people who are sensitive to flashing light.
 
-Readability has a test. It computes contrast for 32 combinations of weather and time of day and fails the build if white headings on the sky, or secondary text on panels, drop below WCAG AA (4.5:1). The lowest value it measures today is 4.95:1.
+The panels are clear glass: a light tint and a strong blur, so the sky's colour comes through, with a rim of light along the edge. By day the tint is a faint smoke; at night it turns to frost, the way the cards in Apple's Weather app gain body after dark.
+
+Clear glass makes contrast a real risk, so readability has a test. It checks 32 combinations of weather and time of day, with the brightest part of a cloud, haze or the sun's glow behind the text, and fails the build if secondary text drops below WCAG AA (4.5:1) on the sky or on a panel. The lowest value it measures today is 4.65:1.
 
 ## Decisions
 

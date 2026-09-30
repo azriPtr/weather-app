@@ -4,10 +4,10 @@
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 
   --color-fg: oklch(99% 0 0);
-  --color-fg-muted: oklch(99% 0 0 / 0.84);
-  --color-fg-subtle: oklch(99% 0 0 / 0.75);
+  --color-fg-muted: oklch(99% 0 0 / 0.88);
+  --color-fg-subtle: oklch(99% 0 0 / 0.8);
   --color-line: oklch(100% 0 0 / 0.1);
-  --color-panel: oklch(20% 0.02 260 / 0.42);
+  --color-panel: var(--glass);
   --color-panel-strong: oklch(18% 0.02 260 / 0.72);
   --color-rain: oklch(85% 0.09 225);
 
@@ -31,12 +31,43 @@
   }
 }
 
+/*
+ * Clear glass: a light tint, a strong blur that lets the sky's colour through,
+ * and a rim of light that is brightest where the sun would catch the edge.
+ * The tint is the minimum that keeps text at 4.5:1 (see contrast.test.ts).
+ */
 @utility panel {
-  border: 1px solid var(--color-line);
+  position: relative;
   border-radius: 1.5rem;
   background-color: var(--color-panel);
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  box-shadow:
+    inset 0 1px 0 0 oklch(100% 0 0 / 0.2),
+    0 16px 40px -20px oklch(0% 0 0 / 0.45);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(
+      155deg,
+      oklch(100% 0 0 / 0.5) 0%,
+      oklch(100% 0 0 / 0.12) 28%,
+      oklch(100% 0 0 / 0.04) 55%,
+      oklch(100% 0 0 / 0.18) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+    pointer-events: none;
+  }
 }
 
 @utility label {
@@ -57,6 +88,7 @@
 
 :root {
   color-scheme: dark;
+  transition: --glass 1800ms var(--ease-in-out-strong);
 }
 
 body {
@@ -141,6 +173,11 @@ body {
   inherits: true;
   initial-value: 0;
 }
+@property --glass {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(100% 0 0 / 0.07);
+}
 @property --haze-opacity {
   syntax: "<number>";
   inherits: true;
@@ -200,8 +237,8 @@ body {
   border-radius: 50%;
   background: radial-gradient(
     closest-side,
-    color-mix(in oklch, var(--cloud-color) 55%, transparent) 0%,
-    color-mix(in oklch, var(--cloud-color) 22%, transparent) 55%,
+    color-mix(in oklch, var(--cloud-color) 42%, transparent) 0%,
+    color-mix(in oklch, var(--cloud-color) 16%, transparent) 55%,
     transparent 100%
   );
   opacity: calc(var(--cloud-opacity) * var(--strength, 1));
