@@ -80,7 +80,7 @@ const DECISIONS: ReadonlyArray<{ title: string; body: string }> = [
 const DESKTOP_SHOTS: ReadonlyArray<{ image: StaticImageData; alt: string; caption: string }> = [
   {
     image: desktopRain,
-    alt: "Chicago in light rain on a grey morning",
+    alt: "Chicago in the rain on a grey morning",
     caption: "Rain on the way",
   },
   { image: desktopNight, alt: "Jakarta on a clear night with stars", caption: "Clear night" },
@@ -94,7 +94,7 @@ const DESKTOP_SHOTS: ReadonlyArray<{ image: StaticImageData; alt: string; captio
 
 const MOBILE_SHOTS: ReadonlyArray<{ image: StaticImageData; alt: string }> = [
   { image: mobileDusk, alt: "Helsinki at dusk on a phone" },
-  { image: mobileRain, alt: "Chicago in light rain on a phone" },
+  { image: mobileRain, alt: "Chicago in the rain on a phone" },
   { image: mobileDetails, alt: "Detail cards on a phone" },
 ];
 

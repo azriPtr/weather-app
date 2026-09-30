@@ -8,13 +8,13 @@ Built with Next.js 16, React 19, TypeScript and Tailwind CSS 4. Weather data com
 
 ![Stratus showing Helsinki at dusk: 14°, sunny, with the hourly and 10-day forecast](docs/screenshots/desktop-dusk.jpg)
 
-| Rain, daytime                                                                 | Clear, night                                                               |
-| ----------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| ![Chicago in light rain on a grey morning](docs/screenshots/desktop-rain.jpg) | ![Jakarta on a clear night with stars](docs/screenshots/desktop-night.jpg) |
+| Rain, daytime                                                               | Clear, night                                                               |
+| --------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| ![Chicago in the rain on a grey morning](docs/screenshots/desktop-rain.jpg) | ![Jakarta on a clear night with stars](docs/screenshots/desktop-night.jpg) |
 
 <p>
   <img src="docs/screenshots/mobile-dusk.jpg" width="32%" alt="Helsinki at dusk on a phone">
-  <img src="docs/screenshots/mobile-rain.jpg" width="32%" alt="Chicago in light rain on a phone">
+  <img src="docs/screenshots/mobile-rain.jpg" width="32%" alt="Chicago in the rain on a phone">
   <img src="docs/screenshots/mobile-details.jpg" width="32%" alt="Detail cards on a phone: UV, air quality, wind, sunset, feels like, humidity, precipitation, visibility">
 </p>
 
