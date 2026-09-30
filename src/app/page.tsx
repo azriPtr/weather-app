@@ -25,13 +25,15 @@ export async function generateMetadata({ searchParams }: PageProps<"/">): Promis
   const image = `/og?${placeToSearchParams(place)}${units === "imperial" ? "&units=imperial" : ""}`;
   const openGraph = { images: [{ url: image, width: 1200, height: 630 }] };
 
+  // The tab keeps the app's name. Shared links still unfurl with the place and
+  // its current weather, which crawlers read from these tags.
   try {
     const { current } = await getForecast(place);
     const condition = describeCondition(current.weatherCode, current.isDay);
     const title = `${place.name} ${formatTemperature(current.temperature, units)} ${condition.label}`;
-    return { title, openGraph: { ...openGraph, title }, twitter: { card: "summary_large_image" } };
+    return { openGraph: { ...openGraph, title }, twitter: { card: "summary_large_image", title } };
   } catch {
-    return { title: place.name, openGraph };
+    return { openGraph: { ...openGraph, title: place.name } };
   }
 }
 

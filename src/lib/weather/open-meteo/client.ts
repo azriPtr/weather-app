@@ -19,6 +19,8 @@ const GEOCODING_URL = "https://geocoding-api.open-meteo.com/v1/search";
 
 /** Open-Meteo refreshes current conditions every 15 minutes. */
 const FORECAST_TTL = 10 * 60;
+/** A 15-minute model step plus the cache window, with some slack. */
+const MAX_AGE = 30 * 60;
 const PLACES_TTL = 24 * 60 * 60;
 const TIMEOUT_MS = 8_000;
 
@@ -42,22 +44,25 @@ function coordinateParams({ latitude, longitude }: Coordinates) {
 // `cache` dedupes calls within one render (metadata + page). The timeout signal
 // opts fetch out of Next's automatic memoization, so it is needed here.
 export const getForecast = cache(async (coordinates: Coordinates): Promise<Forecast> => {
-  const json = await request(
-    FORECAST_URL,
-    {
-      ...coordinateParams(coordinates),
-      current: FORECAST_FIELDS.current.join(","),
-      hourly: FORECAST_FIELDS.hourly.join(","),
-      daily: FORECAST_FIELDS.daily.join(","),
-      timezone: "auto",
-      timeformat: "unixtime",
-      forecast_days: "10",
-      forecast_hours: "25",
-    },
-    FORECAST_TTL,
-  );
+  const params = {
+    ...coordinateParams(coordinates),
+    current: FORECAST_FIELDS.current.join(","),
+    hourly: FORECAST_FIELDS.hourly.join(","),
+    daily: FORECAST_FIELDS.daily.join(","),
+    timezone: "auto",
+    timeformat: "unixtime",
+    forecast_days: "10",
+    forecast_hours: "25",
+  };
+  const load = async (revalidate: number) =>
+    toForecast(forecastResponseSchema.parse(await request(FORECAST_URL, params, revalidate)));
 
-  return toForecast(forecastResponseSchema.parse(json));
+  // The data cache serves a stale entry while it revalidates in the background,
+  // so the first visit after a quiet hour would show an hour-old "now". When the
+  // cached conditions are older than a normal refresh cycle, fetch fresh ones.
+  const forecast = await load(FORECAST_TTL);
+  const age = Date.now() / 1000 - forecast.current.time;
+  return age > MAX_AGE ? load(0) : forecast;
 });
 
 /** Air quality is a nice-to-have: failures resolve to `null` instead of failing the page. */
