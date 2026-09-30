@@ -6,6 +6,8 @@ Built with Next.js 16, React 19, TypeScript and Tailwind CSS 4. Weather data com
 
 **Live: [stratus-weather.vercel.app](https://stratus-weather.vercel.app)**
 
+**Walkthrough: [stratus-weather.vercel.app/about](https://stratus-weather.vercel.app/about)**, a five-minute video of the app and the reasoning behind it.
+
 ![Stratus showing Helsinki at dusk: 14°, sunny, with the hourly and 10-day forecast](docs/screenshots/desktop-dusk.jpg)
 
 | Rain, daytime                                                               | Clear, night                                                               |
