@@ -38,7 +38,7 @@ function Card({
   note?: ReactNode;
 }) {
   return (
-    <section className="flex min-h-44 flex-col panel p-4 sm:p-5">
+    <section className="relative flex min-h-44 flex-col panel p-4 sm:p-5">
       <h3 className="flex items-center gap-1.5 label">
         <Icon aria-hidden className="size-3.5" strokeWidth={2} />
         {title}
@@ -51,11 +51,24 @@ function Card({
   );
 }
 
-function Value({ children, caption }: { children: ReactNode; caption?: ReactNode }) {
+function Value({
+  children,
+  caption,
+  context,
+}: {
+  children: ReactNode;
+  /** A reading of the value, such as "Moderate". */
+  caption?: ReactNode;
+  /** What the value covers, such as "Next 24 hours". */
+  context?: ReactNode;
+}) {
   return (
     <>
-      <p className="text-[2rem] leading-none font-light tracking-tight tabular-nums">{children}</p>
+      <p className="text-[2rem] leading-none font-light tracking-tight whitespace-nowrap tabular-nums">
+        {children}
+      </p>
       {caption && <p className="mt-1.5 font-medium">{caption}</p>}
+      {context && <p className="mt-1.5 text-sm text-fg-muted">{context}</p>}
     </>
   );
 }
@@ -92,7 +105,7 @@ function uvNote({ current, hourly, daily }: Forecast, format: Formatters): strin
 
   if (tomorrow?.uvIndexMax != null) {
     const peak = Math.round(tomorrow.uvIndexMax);
-    return `Tomorrow peaks at ${peak}, ${uvLevel(peak).label.toLowerCase()}.`;
+    return `Tomorrow peaks at ${peak} (${uvLevel(peak).label.toLowerCase()}).`;
   }
   return null;
 }
@@ -248,22 +261,18 @@ export function Details({
             ) : undefined
           }
         >
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <Value caption={`From ${compassDirection(current.windDirection)}`}>
-                <Speed kmh={current.windSpeed} unitClassName={unit} />
-              </Value>
-            </div>
-            <div className="relative grid size-12 shrink-0 place-items-center rounded-full border border-line">
-              <span className="absolute top-0.5 text-[9px] font-medium text-fg-subtle">N</span>
-              {/* Points where the wind is going. */}
-              <Navigation2
-                aria-hidden
-                className="size-4 fill-white/90 text-white/90"
-                strokeWidth={1.5}
-                style={{ transform: `rotate(${current.windDirection + 180}deg)` }}
-              />
-            </div>
+          <Value caption={`From ${compassDirection(current.windDirection)}`}>
+            <Speed kmh={current.windSpeed} unitClassName={unit} />
+          </Value>
+          <div className="absolute top-3.5 right-3.5 grid size-11 place-items-center rounded-full border border-line sm:top-4 sm:right-4">
+            <span className="absolute top-0.5 text-[9px] font-medium text-fg-subtle">N</span>
+            {/* Points where the wind is going. */}
+            <Navigation2
+              aria-hidden
+              className="size-4 fill-white/90 text-white/90"
+              strokeWidth={1.5}
+              style={{ transform: `rotate(${current.windDirection + 180}deg)` }}
+            />
           </div>
         </Card>
 
@@ -293,7 +302,7 @@ export function Details({
         </Card>
 
         <Card icon={Umbrella} title="Precipitation" note={nextWetDay(forecast, format)}>
-          <Value caption="In the next 24 hours">
+          <Value context="Next 24 hours">
             <Precipitation mm={next24h} unitClassName={unit} />
           </Value>
         </Card>
