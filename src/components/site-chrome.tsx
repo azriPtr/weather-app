@@ -65,6 +65,12 @@ export function SiteFooter() {
       >
         Source on GitHub
       </a>
+      <Link
+        href="/about"
+        className="underline decoration-white/30 underline-offset-4 hover:text-fg"
+      >
+        Project walkthrough
+      </Link>
     </footer>
   );
 }
