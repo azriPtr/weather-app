@@ -14,22 +14,22 @@ type Walkthrough = {
 /** Hosted on Vercel Blob; see the project page at /about. */
 const walkthrough: Walkthrough = {
   video:
-    "https://5raecwmdfoanwqin.public.blob.vercel-storage.com/walkthrough/stratus-walkthrough.mp4",
+    "https://5raecwmdfoanwqin.public.blob.vercel-storage.com/walkthrough/stratus-walkthrough-202610010654.mp4",
   poster:
-    "https://5raecwmdfoanwqin.public.blob.vercel-storage.com/walkthrough/stratus-walkthrough-poster.jpg",
+    "https://5raecwmdfoanwqin.public.blob.vercel-storage.com/walkthrough/stratus-walkthrough-202610010654.jpg",
   chapters: [
     { time: 0, title: "Introduction" },
-    { time: 12, title: "Opens where you are" },
-    { time: 33, title: "Current conditions and summary" },
-    { time: 56, title: "Search" },
-    { time: 89, title: "Local time and the next 24 hours" },
-    { time: 104, title: "10-day forecast" },
-    { time: 118, title: "Details with advice" },
-    { time: 142, title: "Units and sharing" },
-    { time: 163, title: "The sky" },
-    { time: 194, title: "Empty, error and mobile states" },
-    { time: 212, title: "How it’s built" },
-    { time: 274, title: "Scope and what’s next" },
+    { time: 17, title: "Opens on your city" },
+    { time: 34, title: "The answer first" },
+    { time: 58, title: "Search" },
+    { time: 91, title: "The next 24 hours" },
+    { time: 117, title: "10-day forecast" },
+    { time: 133, title: "Details with advice" },
+    { time: 160, title: "Units and sharing" },
+    { time: 181, title: "The sky" },
+    { time: 213, title: "Accessibility and other states" },
+    { time: 233, title: "Under the hood" },
+    { time: 280, title: "What's next" },
   ],
 };
 
