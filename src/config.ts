@@ -14,9 +14,9 @@ type Walkthrough = {
 /** Hosted on Vercel Blob; see the project page at /about. */
 const walkthrough: Walkthrough = {
   video:
-    "https://5raecwmdfoanwqin.public.blob.vercel-storage.com/walkthrough/stratus-walkthrough-202610010654.mp4",
+    "https://5raecwmdfoanwqin.public.blob.vercel-storage.com/walkthrough/stratus-walkthrough-202610010752.mp4",
   poster:
-    "https://5raecwmdfoanwqin.public.blob.vercel-storage.com/walkthrough/stratus-walkthrough-202610010654.jpg",
+    "https://5raecwmdfoanwqin.public.blob.vercel-storage.com/walkthrough/stratus-walkthrough-202610010752.jpg",
   chapters: [
     { time: 0, title: "Introduction" },
     { time: 17, title: "Opens on your city" },
